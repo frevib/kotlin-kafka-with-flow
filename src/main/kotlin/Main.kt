@@ -1,13 +1,5 @@
 package com.eventloopsoftware
 
-import example.Cat
-import io.confluent.kafka.serializers.KafkaAvroDeserializer
-import io.confluent.kafka.serializers.KafkaAvroSerializer
-import io.confluent.kafka.serializers.KafkaJsonDeserializer
-import org.apache.kafka.clients.consumer.ConsumerConfig.*
-import org.apache.kafka.clients.consumer.KafkaConsumer
-import org.apache.kafka.common.serialization.StringDeserializer
-//import org.apache.kafka.common.serialization.StringDeserializer
 import java.util.*
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -28,7 +20,10 @@ fun main() {
     val producer = SomeProducer()
     producer.run()
 
-//    val consumer = KafkaConsumer<String, Cat>(props).apply {
-//        subscribe(listOf(topic))
-//    }
+    Thread.sleep(1000)
+
+    val consumer = SomeConsumer()
+    consumer.run()
+
+
 }

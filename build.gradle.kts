@@ -22,6 +22,7 @@ dependencies {
 //    implementation("com.fasterxml.jackson.core:jackson-databind:[2.8.11.1,)")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.16.0")
     implementation("com.google.code.gson:gson:2.10.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.8.0-RC2")
 }
 
 tasks.test {

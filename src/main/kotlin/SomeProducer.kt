@@ -1,12 +1,9 @@
 package com.eventloopsoftware
 
-//import example.Breed
 import example.Breed
 import example.Cat
 import io.confluent.kafka.serializers.KafkaAvroSerializer
 import io.confluent.kafka.serializers.KafkaAvroSerializerConfig
-import io.confluent.kafka.serializers.KafkaJsonDeserializerConfig
-import io.confluent.kafka.serializers.KafkaJsonSerializer
 import org.apache.kafka.clients.producer.KafkaProducer
 import org.apache.kafka.clients.producer.ProducerConfig
 import org.apache.kafka.clients.producer.ProducerRecord
@@ -31,10 +28,11 @@ class SomeProducer {
 
         val topic = "topic_1"
 
+        val numberOfMessages = 11
         KafkaProducer<String, Cat>(props).use { producer ->
-            repeat(2) { i ->
+            repeat(numberOfMessages) { i ->
                 val key = "monkey"
-                val record = Cat(Breed.ABYSSINIAN)
+                val record = Cat(Breed.AMERICAN_SHORTHAIR)
                 println("Producing record: $key\t$record")
 
                 producer.send(ProducerRecord(topic, key, record)) { m: RecordMetadata, e: Exception? ->
@@ -48,7 +46,7 @@ class SomeProducer {
             }
 
             producer.flush()
-            println("10 messages were produced to topic $topic")
+            println("$numberOfMessages messages were produced to topic $topic")
         }
     }
 }

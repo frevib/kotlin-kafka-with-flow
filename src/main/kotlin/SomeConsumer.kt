@@ -55,13 +55,14 @@ class SomeConsumer {
 
     }
 
+    // lambda with generic type variable is not possible in Kotlin. Use fun to return a lambda
     fun <K, V> processKafkaMessage(): suspend (ConsumerRecord<K, V>) -> V = { record -> record.value() }
 
     fun <K, V> KafkaConsumer<K, V>.asFlow(timeout: Duration = Duration.ofMillis(500)): Flow<ConsumerRecord<K, V>> =
         flow {
             use {
                 while (true) {
-                    println("polling...${Random.nextInt()}")
+                    println("debug polling...${Random.nextInt()}")
                     poll(timeout)
                         .forEach { emit(it) }
                 }

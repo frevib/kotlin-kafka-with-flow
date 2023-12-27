@@ -37,9 +37,7 @@ class SomeProducer {
 
                 producer.send(ProducerRecord(topic, key, record)) { m: RecordMetadata, e: Exception? ->
                     when (e) {
-                        // no exception, good to go!
                         null -> println("Produced record to topic ${m.topic()} partition [${m.partition()}] @ offset ${m.offset()}")
-                        // print stacktrace in case of exception
                         else -> e.printStackTrace()
                     }
                 }

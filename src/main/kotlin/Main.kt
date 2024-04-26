@@ -4,12 +4,13 @@ package com.eventloopsoftware
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 fun main() {
 
-    val producer = SomeProducer()
+    val topic = "topic_1"
+    val producer = SomeProducer(topic)
     producer.run()
 
     Thread.sleep(1000)
 
-    val consumer = SomeConsumer()
+    val consumer = SomeConsumer(topic)
     consumer.run()
 
 

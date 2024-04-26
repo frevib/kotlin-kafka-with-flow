@@ -12,6 +12,18 @@
                     "ABYSSINIAN", "AMERICAN_SHORTHAIR", "BIRMAN", "MAINE_COON", "ORIENTAL", "PERSIAN", "RAGDOLL", "SIAMESE", "SPHYNX"
                 ]
             }
+        },
+        {
+            "type": "string",
+            "name": "draadje"
+        },
+        {
+            "type": "string",
+            "name": "another"
+        },
+        {
+            "type": "int",
+            "name": "some_number"
         }
     ]
 }

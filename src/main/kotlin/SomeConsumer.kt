@@ -3,6 +3,7 @@ package com.eventloopsoftware
 import example.Cat
 import io.confluent.kafka.serializers.KafkaAvroDeserializer
 import io.confluent.kafka.serializers.KafkaAvroDeserializerConfig
+import io.confluent.kafka.serializers.KafkaAvroSerializer
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -18,13 +19,11 @@ import java.util.*
 import kotlin.random.Random
 
 
-class SomeConsumer {
+class SomeConsumer(private val topic: String) {
 
     fun run() {
 
         println("Starting consumer...")
-
-        val topic = "topic_1"
 
         val props = Properties()
         props["bootstrap.servers"] = "localhost:9092"
@@ -34,6 +33,8 @@ class SomeConsumer {
         props[ConsumerConfig.GROUP_ID_CONFIG] = "ConsumerGroup1"
         // use SpecificRecord and not GenericRecord
         props[KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG] = "true"
+//        val serializer = KafkaAvroSerializer()
+//        val deserializer = KafkaAvroDeserializer()
 
         val consumer = KafkaConsumer<String, Cat>(props).apply {
             subscribe(listOf(topic))
@@ -47,17 +48,15 @@ class SomeConsumer {
                 .collect { message ->
                     println(message)
                 }
-
-            delay(30000)
         }
 
-        println("after join")
 
     }
 
     // lambda with generic type variable is not possible in Kotlin. Use fun to return a lambda
     fun <K, V> processKafkaMessage(): suspend (ConsumerRecord<K, V>) -> V = { record -> record.value() }
 
+    // extension function
     fun <K, V> KafkaConsumer<K, V>.asFlow(timeout: Duration = Duration.ofMillis(500)): Flow<ConsumerRecord<K, V>> =
         flow {
             use {
